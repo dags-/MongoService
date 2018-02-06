@@ -55,7 +55,7 @@ public class MongoPlugin implements MongoService {
 
     private static InetSocketAddress getAddress(Path dir) {
         // so
-        Path config = dir.resolve("config");
+        Path config = dir.resolve("config.conf");
         HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
                 .setDefaultOptions(ConfigurationOptions.defaults().setShouldCopyDefaults(true))
                 .setPath(config)

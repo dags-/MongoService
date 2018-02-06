@@ -1,0 +1,35 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "2.0.2"
+    id "java"
+}
+
+group "me.dags"
+version "0.1-SNAPSHOT"
+def spongeAPI = "5.2.0"
+def spongeChannel = "SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url "http://repo.spongepowered.org/maven"
+    }
+}
+
+dependencies {
+    compile "de.bwaldvogel:mongo-java-server-h2-backend:1.7.0"
+    compileOnly "org.spongepowered:spongeapi:${spongeAPI}-${spongeChannel}"
+}
+
+shadowJar {
+    classifier = null
+    exclude ".keep"
+    relocate "io.netty.", "me.dags.mongo.libs.netty."
+    relocate "de.bwaldvogel.mongo.", "me.dags.mongo.libs.mongo."
+    dependencies {
+        exclude dependency("org.slf4j:slf4j-api")
+        exclude dependency("com.h2database:h2")
+    }
+}
+
+build.dependsOn shadowJar
